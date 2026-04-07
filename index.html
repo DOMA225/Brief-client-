@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Briefs Créatifs</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f5f2ec;
+    --accent: #e84a2e;
+    --gold: #c9a84c;
+    --mid: #6b6560;
+    --line: #ddd8d0;
+    --white: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  /* HEADER */
+  header {
+    background: var(--ink);
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+  .logo-text span { color: var(--accent); }
+  .header-tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  /* TAB NAV */
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--line);
+    background: var(--white);
+    padding: 0 40px;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 18px 28px;
+    border: none;
+    background: transparent;
+    color: var(--mid);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .tab-icon { font-size: 1rem; }
+  /* MAIN */
+  main { max-width: 860px; margin: 0 auto; padding: 50px 40px 80px; }
+  /* PANEL */
+  .panel { display: none; animation: fadeUp 0.35s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  /* PANEL HEADER */
+  .panel-header {
+    margin-bottom: 48px;
+    padding-bottom: 28px;
+    border-bottom: 2px solid var(--line);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .panel-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .panel-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .panel-desc {
+    font-size: 0.9rem;
+    color: var(--mid);
+    line-height: 1.7;
+    margin-top: 12px;
+    max-width: 480px;
+  }
+  .panel-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 5rem;
+    color: var(--line);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  /* SECTION */
+  .section {
+    margin-bottom: 44px;
+  }
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .section-label .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .section-label h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  /* FIELDS */
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  label {
+    font-size: 0.83rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  label .req { color: var(--accent); margin-left: 2px; }
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: var(--white);
+    border: 1.5px solid var(--line);
+    border-radius: 6px;
+    padding: 12px 16px;
+    transition: border-color 0.2s;
+    outline: none;
+    width: 100%;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+  }
+  textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+  .hint {
+    font-size: 0.75rem;
+    color: var(--mid);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  /* TWO COL */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  /* CHECKBOX GROUP */
+  .check-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white);
+    border: 1.5px solid var(--line);
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 0.83rem;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .check-item input { display: none; }
+  .check-item:has(input:checked) {
+    background: var(--ink);
+    color: var(--white);
+    border-color: var(--ink);
+  }
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--line);
+    margin: 40px 0;
+  }
+  /* SUBMIT */
+  .submit-area {
+    margin-top: 50px;
+    padding-top: 32px;
+    border-top: 2px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+    gap: 16px;
+  }
+  .submit-note {
+    font-size: 0.8rem;
+    color: var(--mid);
+    max-width: 300px;
+    line-height: 1.6;
+  }
+  .btn-submit {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    padding: 16px 36px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-submit:hover {
+    background: #c73d23;
+    transform: translateY(-1px);
+  }
+  .btn-print {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    padding: 14px 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-print:hover {
+    background: var(--ink);
+    color: var(--white);
+  }
+  /* SUCCESS */
+  .success-msg {
+    display: none;
+    margin-top: 20px;
+    background: #f0faf0;
+    border: 1.5px solid #5cb85c;
+    color: #2d7a2d;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+  /* COPY BTN */
+  .copy-area {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    header { padding: 20px 20px; }
+    .tab-nav { padding: 0 20px; }
+    main { padding: 32px 20px 60px; }
+    .two-col { grid-template-columns: 1fr; }
+    .panel-title { font-size: 1.8rem; }
+    .panel-num { font-size: 3.5rem; }
+    .submit-area { flex-direction: column; }
+  }
+  @media print {
+    header, .tab-nav, .submit-area { display: none !important; }
+    .panel { display: block !important; }
+    body { background: white; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-text">Brief<span>.</span>Studio</div>
+  <div class="header-tag">Outils Créatifs</div>
+</header>
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="showPanel('affiche', this)">
+    <span class="tab-icon">🪧</span> Affiche
+  </button>
+  <button class="tab-btn" onclick="showPanel('logo', this)">
+    <span class="tab-icon">🔷</span> Logo
+  </button>
+  <button class="tab-btn" onclick="showPanel('branding', this)">
+    <span class="tab-icon">🎨</span> Branding & Identité
+  </button>
+</nav>
+<main>
+<!-- ══════════════════ BRIEF AFFICHE ══════════════════ -->
+<div class="panel active" id="panel-affiche">
+  <div class="panel-header">
+    <div>
+      <div class="panel-eyebrow">Brief Client</div>
+      <h1 class="panel-title">Création d'Affiche</h1>
+      <p class="panel-desc">Remplissez ce formulaire avec le maximum de détails pour permettre au créatif de livrer exactement ce que vous attendez.</p>
+    </div>
+    <div class="panel-num">01</div>
+  </div>
+  <form id="form-affiche">
+    <!-- CONTEXTE -->
+    <div class="section">
+      <div class="section-label"><div class="dot"></div><h3>Contexte</h3></div>
+      <div class="field-group">
+        <div class="two-col">
+          <div class="field">
+            <label>Nom de l'entreprise / marque <span class="req">*</span></label>
+            <input type="text" placeholder="Ex : Boulangerie Kouassi & Fils" required />
+          </div>
+          <div class="field">
+            <label>Secteur d'activité <span class="req">*</span></label>
+            <input type="text" placeholder="Ex : Restauration, Mode, Santé..." required />
+          </div>
+        </div>
+        <div class="field">
+          <label>Quelle est la raison de cette affiche ? <span class="req">*</span></label>
+          <textarea placeholder="Ex : Lancement d'un nouveau produit, promotion spéciale, événement, campagne de sensibilisation..." required></textarea>
+        </div>
+        <div class="field">
+          <label>Cette affiche s'inscrit-elle dans une campagne plus large ?</label>
+          <div class="check-group">
+            <label class="check-item"><input type="radio" name="campagne-a" value="oui" /> Oui, elle fait partie d'une campagne</label>
+            <label class="check-item"><input type="radio" name="campagne-a" value="non" /> Non, c'est une action isolée</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <!-- OBJECTIF -->
+    <div class="section">
+      <div class="section-label"><div class="dot"></div><h3>Objectif</h3></div>
+      <div class="field-group">
+        <div class="field">
+          <label>Quel est le but principal de cette affiche ? <span class="req">*</span></label>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox" /> Vendre / Promouvoir</label>
+            <label class="check-item"><input type="checkbox" /> Informer</label>
+            <label class="check-item"><input type="checkbox" /> Inviter à un événement</label>
+            <label class="check-item"><input type="checkbox" /> Sensibiliser</label>
+            <label class="check-item"><input type="checkbox" /> Recruter</label>
+            <label class="check-item"><input type="checkbox" /> Autre</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Quelle action souhaitez-vous que le public fasse après avoir vu l'affiche ?</label>
+          <input type="text" placeholder="Ex : Appeler, visiter notre boutique, s'inscrire, partager..." />
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <!-- CIBLE -->
+    <div class="section">
+      <div class="section-label"><div class="dot"></div><h3>Public Cible</h3></div>
+      <div class="field-group">
+        <div class="two-col">
+          <div class="field">
+            <label>Tranche d'âge <span class="req">*</span></label>
+            <input type="text" placeholder="Ex : 18-35 ans" required />
+          </div>
+          <div class="field">
+            <label>Sexe</label>
+            <div class="check-group">
+              <label class="check-item"><input type="checkbox" /> Femmes</label>
+              <label class="check-item"><input type="checkbox" /> Hommes</label>
+              <label class="check-item"><input type="checkbox" /> Tous</label>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Milieu social / Profil</label>
+          <input type="text" placeholder="Ex : Jeunes actifs, étudiants, ménagères, cadres supérieurs..." />
+        </div>
+        <div class="field">
+          <label>Où sera vue cette affiche ? <span class="req">*</span></label>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox" /> Facebook / Instagram</label>
+            <label class="check-item"><input type="checkbox" /> WhatsApp Status</label>
+            <label class="check-item"><input type="checkbox" /> Impression grand format (rue)</label>
+            <label class="check-item"><input type="checkbox" /> Impression A3/A4 en boutique</label>
+            <label class="check-item"><input type="checkbox" /> Écran / Digital signage</label>
+            <label class="check-item"><input type="checkbox" /> Autre</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <!-- MESSAGE -->
+    <div class="section">
+      <div class="section-label"><div class="dot"></div><h3>Message & Contenu</h3></div>
+      <div class="field-group">
+        <div class="field">
+          <label>Quel est le message principal à faire passer ? <span class="req">*</span></label>
+          <textarea placeholder="Ex : Soldes de fin d'année — jusqu'à -50% sur toute la collection..." required></textarea>
+        </div>
+        <div class="field">
+          <label>Y a-t-il un slogan, un titre ou un texte imposé ?</label>
+          <input type="text" placeholder="Ex : « La qualité à votre portée »" />
+        </div>
+        <div class="field">
+          <label>Informations obligatoires à faire apparaître <span class="req">*</span></label>
+          <textarea placeholder="Ex : Date, lieu, prix, numéro de téléphone, site web, logo, mention légale..." required></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <!-- DIRECTION ARTISTIQUE -->
+    <div class="section">
+      <div class="section-label"><div class="dot"></div><h3>Direction Artistique</h3></div>
+      <div class="field-group">
+        <div class="field">
+          <label>Avez-vous une charte graphique existante ?</label>
+          <div class="check-group">
+            <label class="check-item"><input type="radio" name="charte-a" value="oui" /> Oui (logo + couleurs + polices)</label>
+            <label class="check-item"><input type="radio" name="charte-a" value="partiel" /> Partiellement</label>
+            <label class="check-item"><input type="radio" name="charte-a" value="non" /> Non</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Couleurs souhaitées ou couleurs de la marque</label>
+          <input type="text" placeholder="Ex : Bleu marine #003366 et or, ou « couleurs vives et festives »" />
+        </div>
+        <div class="field">
+          <label>Couleurs, styles ou éléments à éviter absolument</label>
+          <input type="text" placeholder="Ex : Pas de rouge, pas de style enfantin, éviter le noir seul..." />
+        </div>
+        <div class="field">
+          <label>Ambiance / style souhaité</label>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox" /> Moderne & Épuré</label>
+            <label class="check-item"><input type="checkbox" /> Luxueux & Élégant</label>
+            <label class="check-item"><input type="checkbox" /> Festif & Coloré</label>
+            <label class="check-item"><input type="checkbox" /> Corporate & Professionnel</label>
+            <label class="check-item"><input type="checkbox" /> Africain & Culturel</label>
+            <label class="check-item"><input type="checkbox" /> Minimaliste</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Avez-vous des photos ou visuels à intégrer obligatoirement ?</label>
+          <div class="check-group">
+            <label class="check-item"><input type="radio" name="visuels-a" value="oui" /> Oui, je les fournirai</label>
+            <label class="check-item"><input type="radio" name="visuels-a" value="non" /> Non, libre au créatif</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Références d'affiches que vous aimez (benchmark)</label>
+          <textarea placeholder="Partagez des liens, des noms de marques ou décrivez des visuels qui vous ont plu. Plus vous êtes précis, mieux c'est."></textarea>
+          <span class="hint">Astuce : des captures d'écran ou liens Pinterest / Instagram sont les bienvenus.</span>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <!-- LIVRABLES -->
+    <div class="section">
+      <div class="section-label"><div class="dot"></div><h3>Livrables & Formats</h3></div>
+      <div class="field-group">
+        <div class="field">
+          <label>Formats nécessaires <span class="req">*</span></label>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox" /> Post carré (1080×1080)</label>
+            <label class="check-item"><input type="checkbox" /> Story / Reel (1080×1920)</label>
+            <label class="check-item"><input type="checkbox" /> A4 Portrait</label>
+            <label class="check-item"><input type="checkbox" /> A3 Portrait</label>
+            <label class="check-item"><input type="checkbox" /> Bannière Facebook</label>
+            <label class="check-item"><input type="checkbox" /> Grand format / Bâche</label>
+            <label class="check-item"><input type="checkbox" /> Autre (préciser ci-dessous)</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Précisez si autre format</label>
+          <input type="text" placeholder="Ex : 90×120 cm, carte de visite, format personnalisé..." />
+        </div>
+        <div class="field">
+          <label>Format de livraison souhaité <span class="req">*</span></label>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox" /> PDF Haute résolution</label>
+            <label class="check-item"><input type="checkbox" /> PNG</label>
+            <label class="check-item"><input type="checkbox" /> JPEG</label>
+            <label class="check-item"><input type="checkbox" /> Fichier source (Photoshop / Illustrator)</label>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="field">
+            <label>Nombre de propositions souhaitées</label>
+            <select>
+              <option value="">Sélectionner</option>
+              <option>1 proposition</option>
+              <option>2 propositions</option>
+              <option>3 propositions</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Deadline <span class="req">*</span></label>
+            <input type="date" required />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- SUBMIT -->
+    <div class="submit-area">
+      <p class="submit-note">Assurez-vous d'avoir rempli tous les champs obligatoires <span style="color:var(--accent)">*</span> avant d'envoyer.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button type="button" class="btn-print" onclick="window.print()">🖨️ Imprimer</button>
+        <button type="button" class="btn-submit" onclick="submitForm('form-affiche', 'success-affiche')">Envoyer le Brief →</button>
+      </div>
+    </div>
+    <div class="success-msg" id="success-affiche">✅ Merci ! Votre brief a bien été reçu. Vous serez contacté sous 24h.</div>
+  </form>
+</div>
+<!-- ══════════════════ BRIEF LOGO ══════════════════ -->
+<div class="panel" id="panel-logo">
+  <div class="panel-header">
+    <div>
+      <div class="panel-eyebrow">Brief Client</div>
+      <h1 class="panel-title">Création de Logo</h1>
+      <p class="panel-desc">Un logo efficace naît d'un brief précis. Donnez-nous tout le contexte nécessaire pour créer une identité visuelle mémorable.</p>
+    </div>
+    <div class="panel-num">02</div>
+  </div>
+  <form id="form-logo">
+    <!-- CONTEXTE -->
+    <div class="section">
+      <div class="section-label"><div class="dot"></div><h3>Contexte</h3></div>
+      <div class="field-group">
+        <div class="two-col">
+          <div class="field">
+            <label>Nom exact de l'entreprise / marque <span class="req">*</span></label>
+            <input type="text" placeholder="Nom tel qu'il doit apparaître sur le logo" required />
+          </div>
+          <div class="field">
+            <label>Secteur d'activité <span class="req">*</span></label>
+            <input type="text" placeholder="Ex : Immobilier, Beauté, Tech..." required />
+          </div>
+        </div>
+        <div class="field">
+          <label>Y a-t-il un slogan / tagline à intégrer au logo ?</label>
+          <input type="text" placeholder="Ex : « L'excellence à portée de main »" />
+        </div>
+        <div class="field">
+          <label>Décrivez votre activité en 2-3 phrases <span class="req">*</span></label>
+          <textarea placeholder="Que faites-vous exactement ? Pour qui ? En quoi vous êtes-vous différent des autres ?" required></textarea>
+        </div>
+        <div class="field">
+          <label>Type de projet <span class="req">*</span></label>
+          <div class="check-group">
+            <label class="check-item"><input type="radio" name="type-logo" value="creation" /> Création (nouveau logo)</label>
+            <label class="check-item"><input type="radio" name="type-logo" value="refonte" /> Refonte (logo existant à moderniser)</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Si refonte : qu'est-ce qui ne va plus dans l'ancien logo ?</label>
+          <textarea placeholder="Ex : Trop vieux, ne reflète plus nos valeurs, peu lisible sur mobile..."></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <!-- CIBLE & POSITIONNEMENT -->
+    <div class="section">
+      <div class="section-label"><div class="dot"></div><h3>Cible & Positionnement</h3></div>
+      <div class="field-group">
+        <div class="field">
+          <label>Décrivez votre client idéal <span class="req">*</span></label>
+          <input type="text" placeholder="Ex : Femmes 25-45 ans, classe moyenne supérieure, urbaine, à la recherche de qualité" required />
+        </div>
+        <div class="field">
+          <label>Quels sont vos principaux concurrents ?</label>
+          <textarea placeholder="Citez 2 à 3 noms de concurrents. Ça aide à positionner votre logo dans votre secteur."></textarea>
+        </div>
+        <div class="field">
+          <label>Quelle image votre logo doit-il renvoyer ? <span class="req">*</span></label>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox" /> Sérieux & Professionnel</label>
+            <label class="check-item"><input type="checkbox" /> Moderne & Innovant</label>
+            <label class="check-item"><input type="checkbox" /> Premium & Luxueux</label>
+            <label class="check-item"><input type="checkbox" /> Accessible & Chaleureux</label>
+            <label class="check-item"><input type="checkbox" /> Dynamique & Jeune</label>
+            <label class="check-item"><input type="checkbox" /> Africain & Identitaire</label>
+            <label class="check-item"><input type="checkbox" /> Minimaliste & Épuré</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <!-- DIRECTION ARTISTIQUE -->
+    <div class="section">
+      <div class="section-label"><div class="dot"></div><h3>Direction Artistique</h3></div>
+      <div class="field-group">
+        <div class="field">
+          <label>Quel style de logo vous attire ? <span class="req">*</span></label>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox" /> Typographique (texte uniquement)</label>
+            <label class="check-item"><input type="checkbox" /> Emblème (texte + symbole intégrés)</label>
+            <label class="check-item"><input type="checkbox" /> Icône + texte séparés</label>
+            <label class="check-item"><input type="checkbox" /> Monogramme (initiales)</label>
+            <label class="check-item"><input type="checkbox" /> Mascotte / Illustration</label>
+            <label class="check-item"><input type="checkbox" /> Pas de préférence</label>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="field">
+            <label>Couleurs souhaitées</label>
+            <input type="text" placeholder="Ex : Bleu et or, vert et blanc, tons terracotta..." />
+          </div>
+          <div class="field">
+            <label>Couleurs à éviter absolument</label>
+            <input type="text" placeholder="Ex : Rose, orange fluo, noir seul..." />
+          </div>
+        </div>
+        <div class="field">
+          <label>Souhaitez-vous intégrer un symbole ou une icône particulière ?</label>
+          <textarea placeholder="Ex : Une flamme (énergie), une feuille (nature), une silhouette africaine, rien de particulier..."></textarea>
+        </div>
+        <div class="field">
+          <label>Logos de référence que vous aimez (benchmark)</label>
+          <textarea placeholder="Noms de marques, liens, descriptions... Même hors de votre secteur. Ex : « J'aime le logo Apple pour sa simplicité, Airbnb pour sa forme moderne »"></textarea>
+          <span class="hint">Plus vous donnez de références, mieux le créatif cernera vos goûts.</span>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <!-- LIVRABLES -->
+    <div class="section">
+      <div class="section-label"><div class="dot"></div><h3>Livrables & Formats</h3></div>
+      <div class="field-group">
+        <div class="field">
+          <label>Sur quels supports sera principalement utilisé ce logo ? <span class="req">*</span></label>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox" /> Réseaux sociaux</label>
+            <label class="check-item"><input type="checkbox" /> Site web</label>
+            <label class="check-item"><input type="checkbox" /> Cartes de visite</label>
+            <label class="check-item"><input type="checkbox" /> Impression (enseignes, panneaux)</label>
+            <label class="check-item"><input type="checkbox" /> Vêtements / Broderie</label>
+            <label class="check-item"><input type="checkbox" /> Packaging / Étiquettes</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Déclinaisons nécessaires</label>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox" /> Version couleur (principale)</label>
+            <label class="check-item"><input type="checkbox" /> Version noir & blanc</label>
+            <label class="check-item"><input type="checkbox" /> Version fond sombre</label>
+            <label class="check-item"><input type="checkbox" /> Version fond clair</label>
+            <label class="check-item"><input type="checkbox" /> Favicon / icône seule</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Formats de livraison souhaités <span class="req">*</span></label>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox" /> PNG fond transparent</label>
+            <label class="check-item"><input type="checkbox" /> PDF vectoriel</label>
+            <label class="check-item"><input type="checkbox" /> SVG</label>
+            <label class="check-item"><input type="checkbox" /> Fichier source (AI / EPS)</label>
+            <label class="check-item"><input type="checkbox" /> JPEG</label>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="field">
+            <label>Nombre de propositions souhaitées</label>
+            <select>
+              <option value="">Sélectionner</option>
+              <option>1 proposition</option>
+              <option>2 propositions</option>
+              <option>3 propositions</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Deadline <span class="req">*</span></label>
+            <input type="date" required />
+          </div>
+        </div>
+        <div class="field">
+          <label>Budget approximatif</label>
+          <input type="text" placeholder="Ex : 25 000 FCFA, ouvert à discussion..." />
+        </div>
+      </div>
+    </div>
+    <!-- SUBMIT -->
+    <div class="submit-area">
+      <p class="submit-note">Assurez-vous d'avoir rempli tous les champs obligatoires <span style="color:var(--accent)">*</span> avant d'envoyer.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button type="button" class="btn-print" onclick="window.print()">🖨️ Imprimer</button>
+        <button type="button" class="btn-submit" onclick="submitForm('form-logo', 'success-logo')">Envoyer le Brief →</button>
+      </div>
+    </div>
+    <div class="success-msg" id="success-logo">✅ Merci ! Votre brief a bien été reçu. Vous serez contacté sous 24h.</div>
+  </form>
+</div>
+<!-- ══════════════════ BRIEF BRANDING ══════════════════ -->
+<div cla
